@@ -29,4 +29,17 @@ body {
     font-size: 1.2em;
     position: absolute;
     transition: transform 0.2s;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.bubble a {
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

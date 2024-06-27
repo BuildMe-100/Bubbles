@@ -15,8 +15,8 @@ class Bubble {
         this.element.appendChild(link);
         bubbleContainer.appendChild(this.element);
 
-        this.dx = (Math.random() - 0.5) * 2;
-        this.dy = (Math.random() - 0.5) * 2;
+        this.dx = (Math.random() - 0.5) * 2;  // Slower movement
+        this.dy = (Math.random() - 0.5) * 2;  // Slower movement
 
         this.updatePosition = this.updatePosition.bind(this);
     }

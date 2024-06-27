@@ -27,7 +27,7 @@ body {
     position: absolute;
     transition: transform 0.2s;
     text-align: center;
-    padding: 10px;
+    padding: 50px;
     cursor: pointer;
     animation: float 4s ease-in-out infinite;
 }

@@ -1,35 +1,45 @@
 const bubbleContainer = document.getElementById('bubble-container');
 
-function createBubble(text, url, x, y) {
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.style.left = `${x}px`;
-    bubble.style.top = `${y}px`;
+class Bubble {
+    constructor(text, url, x, y) {
+        this.element = document.createElement('div');
+        this.element.className = 'bubble';
+        this.element.style.left = `${x}px`;
+        this.element.style.top = `${y}px`;
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.textContent = text;
-    link.target = '_blank';
+        const link = document.createElement('a');
+        link.href = url;
+        link.textContent = text;
+        link.target = '_blank';
 
-    bubble.appendChild(link);
-    bubbleContainer.appendChild(bubble);
+        this.element.appendChild(link);
+        bubbleContainer.appendChild(this.element);
 
-    bubble.addEventListener('mouseenter', () => {
-        bubble.style.transform = 'scale(1.2)';
-    });
+        this.dx = (Math.random() - 0.5) * 4;
+        this.dy = (Math.random() - 0.5) * 4;
 
-    bubble.addEventListener('mouseleave', () => {
-        bubble.style.transform = 'scale(1)';
-    });
+        this.updatePosition = this.updatePosition.bind(this);
+    }
 
-    return bubble;
-}
+    updatePosition() {
+        let x = parseFloat(this.element.style.left);
+        let y = parseFloat(this.element.style.top);
 
-function moveBubble(bubble) {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 100);
-    bubble.style.left = `${x}px`;
-    bubble.style.top = `${y}px`;
+        x += this.dx;
+        y += this.dy;
+
+        if (x < 0 || x > window.innerWidth - 100) this.dx *= -1;
+        if (y < 0 || y > window.innerHeight - 100) this.dy *= -1;
+
+        this.element.style.left = `${x}px`;
+        this.element.style.top = `${y}px`;
+
+        requestAnimationFrame(this.updatePosition);
+    }
+
+    start() {
+        requestAnimationFrame(this.updatePosition);
+    }
 }
 
 const bubbleData = [
@@ -45,14 +55,9 @@ const bubbleData = [
     { text: 'Hesperia', url: 'https://www.weatherbug.com/weather-forecast/now/hesperia-ca-92345' }
 ];
 
-const bubbles = [];
 bubbleData.forEach(data => {
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 100);
-    const bubble = createBubble(data.text, data.url, x, y);
-    bubbles.push(bubble);
+    const bubble = new Bubble(data.text, data.url, x, y);
+    bubble.start();
 });
-
-setInterval(() => {
-    bubbles.forEach(bubble => moveBubble(bubble));
-}, 2000);
